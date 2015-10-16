@@ -9,7 +9,7 @@ module Jekyll
           options.each {|opt| c.option *opt }
 
           c.action do |args, options| 
-             args << "Daily Log"
+             args << Time.now.strftime '%F'
 	     process args, options 
           end
         end
@@ -24,13 +24,20 @@ module Jekyll
 
 
       def self.process(args = [], options = {})
-        params = Compose::ArgParser.new args, options
+        params = DiaryArgParser.new args, options
         params.validate!
 
         diary = DiaryFileInfo.new params
 
         Compose::FileCreator.new(diary, false).create!
       end
+
+      class DiaryArgParser < Compose::ArgParser
+        def date
+          options["date"].nil? ? Time.now : DateTime.parse(options["date"])
+        end
+      end
+
 
       class DiaryFileInfo < Compose::FileInfo
         def resource_type
