@@ -9,7 +9,7 @@ module Jekyll
           options.each {|opt| c.option *opt }
 
           c.action do |args, options| 
-             args << Time.now.strftime '%F'
+             args << Time.now.strftime('%F')
 	     process args, options 
           end
         end
