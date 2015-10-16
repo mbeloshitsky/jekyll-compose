@@ -8,9 +8,10 @@ module Jekyll
 
           options.each {|opt| c.option *opt }
 
-	  args << "Daily Log"
-
-          c.action { |args, options| process args, options }
+          c.action do |args, options| 
+             args << "Daily Log"
+	     process args, options 
+          end
         end
       end
 
