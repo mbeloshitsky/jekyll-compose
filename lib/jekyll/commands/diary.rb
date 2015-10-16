@@ -15,8 +15,7 @@ module Jekyll
       def self.options
         [
           ['extension', '-x EXTENSION', '--extension EXTENSION', 'Specify the file extension'],
-          ['layout', '-l LAYOUT', '--layout LAYOUT', "Specify the draft layout"],
-          ['force', '-f', '--force', 'Overwrite a draft if it already exists']
+          ['layout', '-l LAYOUT', '--layout LAYOUT', "Specify the diary layout"],
         ]
       end
 
@@ -27,7 +26,7 @@ module Jekyll
 
         diary = DiaryFileInfo.new params
 
-        Compose::FileCreator.new(diary, params.force?).create!
+        Compose::FileCreator.new(diary, false).create!
       end
 
       class DiaryFileInfo < Compose::FileInfo
