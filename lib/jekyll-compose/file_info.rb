@@ -10,10 +10,15 @@ class Jekyll::Compose::FileInfo
   end
 
   def content
+    frontmatter = [
+     "layout: #{params.layout}",
+     "title: #{params.title}"
+    ]
+    frontmatter.push("date: #{params.date}") if params.date 
+     
     <<-CONTENT.gsub /^\s+/, ''
       ---
-      layout: #{params.layout}
-      title: #{params.title}
+      #{frontmatter.join("\n")}
       ---
     CONTENT
   end

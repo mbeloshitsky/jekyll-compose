@@ -9,7 +9,8 @@ module Jekyll
           options.each {|opt| c.option *opt }
 
           c.action do |args, options| 
-             args << Time.now.strftime('%F')
+             options['date'] = Time.now.strftime('%Y-%m-%d %H:%M')
+             args << "'* * *'"
 	     process args, options 
           end
         end
@@ -34,7 +35,7 @@ module Jekyll
 
       class DiaryArgParser < Compose::ArgParser
         def date
-          options["date"].nil? ? Time.now : DateTime.parse(options["date"])
+          options["date"].nil? ? Time.now.strftime('%Y-%m-%d %H:%M') : options["date"]
         end
       end
 
@@ -46,6 +47,10 @@ module Jekyll
 
         def path
           "_diary/#{file_name}"
+        end
+
+        def file_name
+          Time.now.strftime '%Y-%m-%d.md'
         end
       end
     end
